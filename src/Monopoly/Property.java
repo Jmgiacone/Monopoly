@@ -1,0 +1,119 @@
+package Monopoly;
+
+/**
+ *
+ * @author Jordan
+ */
+public class Property extends Card implements Improvable
+{
+    protected int price; 
+    private final int BASE,HOUSE1, HOUSE2, HOUSE3, HOUSE4, HOTEL;
+    private int rent; 
+    private String owner;
+    private boolean mortgaged;
+    
+    public Property(String newName, int newPrice, int newRent, int newH1, 
+            int newH2, int newH3, int newH4, int newHotel)
+    {
+        super(newName, "", -1);
+        price = newPrice;
+        BASE = newRent;
+        rent = BASE;
+        HOUSE1 = newH1;
+        HOUSE2 = newH2;
+        HOUSE3 = newH3;
+        HOUSE4 = newH4;
+        HOTEL = newHotel;
+        owner = "";
+        mortgaged = false;
+        property = true;
+        card = false;
+    }
+    
+    /**
+     * An overridden method from interface improvable
+     */
+    @Override
+    public void improve()
+    {
+        
+    }
+    
+    /**
+     * Returns the price of the property
+     * @return the price of the property
+     */
+    public int getPrice()
+    {
+        return price;
+    }
+    
+    /**
+     * Returns the owner of the property. If none, returns the bank.
+     * @return 
+     */
+    public String getOwner()
+    {
+        if(owner.equalsIgnoreCase(""))
+        {
+            return "The Bank";
+        }
+        return owner;
+    }
+    
+    /**
+     * Returns whether or not the property is owned
+     * @return True if it is, false if not;
+     */
+    public boolean isOwned()
+    {
+        return !owner.equalsIgnoreCase("");
+    }
+    @Override
+    public String toString()
+    {
+        return name + ""
+                + "\nBuy: "+price+""
+                + "\nMortgage: "+price / 2
+                + "\nNo Houses: "+BASE
+                + "\nAll Owned: "+BASE * 2
+                + "\n1 House: " +HOUSE1
+                + "\n2 Houses: "+HOUSE2
+                + "\n3 Houses: "+HOUSE3
+                + "\n4 Houses: "+HOUSE4
+                + "\nHotel: "+HOTEL;
+                
+    }
+    
+    public boolean isRailroad()
+    {
+        return railroad;
+    }
+    
+    public boolean isUtility()
+    {
+        return utility;
+    }
+    
+    public boolean isMortgaged()
+    {
+        return mortgaged;
+    }
+    
+    public void mortgage()
+    {
+        mortgaged = true;
+        price /= 2;
+    }
+    
+    public void unMortgage()
+    {
+        mortgaged = false;
+        price *= 2;
+    }
+    
+    public int currentRent()
+    {
+        return rent;
+    }
+}
