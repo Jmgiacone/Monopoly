@@ -4,16 +4,17 @@
  */
 package Monopoly;
 
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author Jordan
  */
 public class RailRoad extends Property
 {
-    public RailRoad(String newName, int newPrice)
+    public RailRoad(String newName, int newPrice, Point2D coord)
     {
-       super(newName, newPrice,-1,-1,-1,-1,-1,-1);
-        railroad = true;
+       super(newName, newPrice,-1,-1,-1,-1,-1,-1, coord);
     }
     
     @Override

@@ -8,9 +8,9 @@ package Monopoly;
  *
  * @author Jordan
  */
-public class Card extends Space 
+public class Card 
 {
-    private String message;
+    private String message, name;
     private int reward;
     
     /**
@@ -21,10 +21,9 @@ public class Card extends Space
      */
     public Card(String newName, String newMessage, int newReward)
     {
-        super(newName);
+        name = newName;
         message = newMessage;
         reward = newReward;
-        card = true;
         
     }
     
@@ -45,9 +44,4 @@ public class Card extends Space
     {
         return name + "\n" + message;
     }
-    
-    
-    
-    
-    
 }

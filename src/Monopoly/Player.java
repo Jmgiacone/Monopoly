@@ -1,24 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Monopoly;
 
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jordan
  */
-public class Player 
+public class Player implements Comparable<Player>
 {
     private String name;
     private int balance, roll1, roll2;
     private Random random;
     private Piece piece;
     private boolean inJail, doubles, triples, bankrupt;
+    private int numRailroadsOwned;
     
     private ArrayList<Property> properties;
     
@@ -29,11 +25,12 @@ public class Player
         roll1 = -1;
         roll2 = -1;
         balance = 1500;
-        properties = new ArrayList<Property>();
+        properties = new ArrayList<>();
         inJail = false;
         doubles = false;
         triples = false;
         bankrupt = false;
+        numRailroadsOwned = 0;
     }
     
     public boolean isBankrupt()
@@ -45,16 +42,18 @@ public class Player
         return name;
     }
     
+    public int getNumRailRoads()
+    {
+        return numRailroadsOwned;
+    }
     public void landOn(Space s)
     {
         //If it's a property
-        if(s.isProperty())
+        if(s instanceof Property)
         {
-            //now castable as a property
-            Property p = (Property)s;
-            if(((Property)s).isUtility())
+            if(s instanceof Utility)
             {
-                Utility u = (Utility)Bank.getProperty((Property)s);
+                Utility u = (Utility)s;
                 if(!u.isOwned())
                 {
                     //Ask if they want to buy
@@ -65,9 +64,9 @@ public class Player
                    pay(u);
                 }
             }
-            else if(((Property)s).isRailroad())
+            else if(s instanceof RailRoad)
             {
-                RailRoad r = (RailRoad)Bank.getProperty((Property)s);
+                RailRoad r = (RailRoad)s;
                 if(!r.isOwned())
                 {
                     //Ask if they want to buy
@@ -80,8 +79,9 @@ public class Player
             }
             else
             {
+                Property p;
                 //It's just a straight up property
-                p = Bank.getProperty((Property)s);
+                p = (Property)s;
 
                 if(!p.isOwned())
                 {
@@ -94,24 +94,9 @@ public class Player
                 }
             }
         }
-        else if(s.isCard())
-        {
-            Card c = (Card)s;
-            JOptionPane.showMessageDialog(null, c);
-            balance += c.getReward();
-        }
         else 
         {
-            
-            if(s.getName().equalsIgnoreCase("Go"))
-            {
-                balance += Bank.LAND_ON_GO_AMOUNT;
-            }
-            else if(s.getName().equalsIgnoreCase("Luxury Tax"))
-            {
-                balance -= 75;
-            }
-            else if(s.getName().equalsIgnoreCase("Income Tax"))
+            if(s.getName().equalsIgnoreCase("Income Tax"))
             {
                 int total = balance;
                 for(int i = 0; i < properties.size(); i++)
@@ -129,37 +114,70 @@ public class Player
                     balance -= total / 10;
                 }
             }
-            else if(s.getName().equalsIgnoreCase("Free Parking"))
-            {
-                //Nothing!
-            }
             else if(s.getName().equalsIgnoreCase("Go to Jail"))
             {
                 inJail = true;
             }
             else if(s.getName().equalsIgnoreCase("Chance"))
             {
-                //draw a card and add/subtract reward
+                pay(Bank.drawnChance());
             }
             else if(s.getName().equalsIgnoreCase("Community Chest"))
             {
-                //same here
+                pay(Bank.drawCommunityChest());
             }
-            else 
+            else if(s.getName().equalsIgnoreCase("Free Parking"))
             {
-                
+                //Do Nothing
+            }
+            else
+            {
+                throw new UnknownError("This should never have been called");
             }
         }
     }
     
+    public void pay(Card c)
+    {
+        balance += c.getReward();
+    }
+    public void pay(Space s)
+    {
+        balance += s.getReward();
+    }
+    public void pay(RailRoad r)
+    {
+        if(r.getOwner().equalsIgnoreCase(name))
+        {
+            //Your property, no rent paid
+        }
+        else if(!r.isMortgaged())
+        {
+            
+        }
+        //Mortgaged, no Payment. GG
+        numRailroadsOwned++;
+    }
+    public void pay(Utility u)
+    {
+        
+    }
     public void pay(Property p)
     {
-        balance -= p.currentRent();
-        Board.players.get(
-                Board.findPlayerIndex(
-                p.getOwner())).
-                acceptPayment(
-                p.currentRent());
+//        if(p.getOwner().equalsIgnoreCase(name))
+//        {
+//            //Your property, no rent paid
+//        }
+//        else if(!p.isMortgaged())
+//        {
+//            balance -= p.currentRent();
+//            Board.players.get(
+//                    Board.findPlayerIndex(
+//                    p.getOwner())).
+//                    acceptPayment(
+//                    p.currentRent());
+//        }
+//        //Mortgaged, no Payment. GG
     }
     
     public void acceptPayment(int payment)
@@ -204,7 +222,7 @@ public class Player
     
     public String buy(Property p)
     {
-        if(!p.isOwned() && balance - p.getPrice() > 0)
+        if(!p.isOwned() && balance - p.getPrice() >= 0)
         {
             balance -= p.getPrice();
             properties.add(p);
@@ -212,6 +230,7 @@ public class Player
             return "You successfully bought "+p.getName();
             //Have bank remove the property
         }
+        
         return p.getName() + " is either owned, "
                 + "or you have insufficient funds";
     }
@@ -223,7 +242,8 @@ public class Player
         {
             if(properties.get(properties.indexOf(p)).isMortgaged())
             {
-                return "This property is already mortgaged";
+                return "This property is already mortgaged."
+                        + "\nYou can't mortgage a Property twice.";
             }
             else
             {
@@ -234,11 +254,16 @@ public class Player
                         + p.getPrice() / 2;
             }
         }
+        
         return "You don't own "+ p.getName() + ", therefore you can't "
                 + "mortgage it";
         
     }
     
+    /**
+     * jordan
+     * @param other 
+     */
     public void tradeWith(Player other)
     {
         
@@ -246,14 +271,14 @@ public class Player
     
     public void bankrupt()
     {
-        
+        Board.bankrupt(this);
     }
     
     public String unMortgage(Property p)
     {
         if(properties.contains(p))
         {
-            if(balance - ((p.getPrice() / 2) + ((p.getPrice() / 2) * .1)) <= 0)
+            if(balance - ((p.getPrice() / 2) + ((p.getPrice() / 2) /** .1*/)) <= 0)
             {
                 return "You don't have enough money to do this";
             }
@@ -267,5 +292,11 @@ public class Player
         
         return "You don't own "+ p.getName() + ", therefore you can't "
                 + "mortgage it";
+    }
+
+    @Override
+    public int compareTo(Player p) 
+    {
+        return name.compareTo(p.name);
     }
 }

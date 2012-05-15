@@ -1,8 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Monopoly;
+
+import java.awt.geom.Point2D;
 
 /**
  *
@@ -11,41 +9,22 @@ package Monopoly;
 public class Space 
 {
     protected String name;
-    protected boolean property, utility, railroad,card;
+    protected final Point2D coords;
+    protected final int reward;
     
     /**
      * Constructs a space with the given name(most likely to be casted
      * otherwise later)
      * @param newName The name to be given
      */
-    public Space(String newName)
+    public Space(String newName, Point2D coord, int newReward)
     {
         name = newName;
-        property = false;
-        utility = false;
-        railroad = false;
-        card = false;
-        
+        coords = coord;
+        reward = newReward;
     }
     
-    /**
-     * Tells whether or not the selected space is also a property
-     * @return True if it is, false if not
-     */
-    public boolean isProperty()
-    {
-        return property;
-    }
-    
-    /**
-     * Tells whether or not the selected space is also a card
-     * @return True if it is, false if not 
-     */
-    public boolean isCard()
-    {
-        return card;
-    }
-    
+   
     /**
      * Returns the name of the space
      * @return The name of the space
@@ -53,5 +32,10 @@ public class Space
     public String getName()
     {
         return name;
+    }
+    
+    public int getReward()
+    {
+        return reward;
     }
 }

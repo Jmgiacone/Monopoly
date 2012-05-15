@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Monopoly;
 
 import java.io.File;
@@ -15,7 +11,7 @@ public class Piece
     private String name, owner;
     private File image;
     private int position;
-    boolean isClaimed;
+    boolean claimed;
     
     public Piece(String newName)
     {
@@ -23,23 +19,28 @@ public class Piece
         position = 0;
         name = newName;
         //image = newImage;
-        isClaimed = false;
+        claimed = false;
+    }
+    
+    public boolean isClaimed()
+    {
+        return claimed;
     }
     
     public void claim(String newOwner)
     {
         owner = newOwner;
+        claimed = true;
     }
     public void move(int spaces)
     {
-        for(int i = 0; i < spaces; i++)
+        position += spaces;
+        
+        if(position >= 40)
         {
-            if(position >= 40)
-            {
-                position = 0;
-            }
-            position++;
+            position -= 40;
         }
+        
     }
     public int getPosition()
     {
@@ -50,5 +51,9 @@ public class Piece
         return name;
     }
     
+    public String getOwner()
+    {
+        return owner;
+    }
     
 }

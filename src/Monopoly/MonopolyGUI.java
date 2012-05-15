@@ -4,6 +4,7 @@
  */
 package Monopoly;
 
+import java.awt.BorderLayout;
 import javax.swing.*;
 
 /**
@@ -13,12 +14,31 @@ import javax.swing.*;
 public class MonopolyGUI extends JApplet 
 {
     private Board b;
-    private JLabel background;
+    private JPanel topButtons, bottomButtons;
+    
     public MonopolyGUI()
     {
         b = new Board();
-        background = new JLabel(new ImageIcon("images/monopoly-board.png"));
+        initButtons();
+        initPanels();
+        addElements();
         
+    }
+    
+    private void initButtons()
+    {
+        
+    }
+    private void initPanels()
+    {
+        topButtons = new JPanel();
+        bottomButtons = new JPanel();
+    }
+    private void addElements()
+    {
+        getContentPane().add(topButtons, BorderLayout.NORTH);
+        getContentPane().add(b.getBoard(), BorderLayout.CENTER);
+        getContentPane().add(bottomButtons, BorderLayout.SOUTH);
     }
     /**
      * Initialization method that will be called after the applet is loaded
@@ -27,12 +47,8 @@ public class MonopolyGUI extends JApplet
     @Override
     public void init() 
     {
-        //b.start();
-        getContentPane().add(background); 
-//        while(!b.isWinner())
-//        {
-//            
-//        }
+        setSize(400, 400);
+        setVisible(true);
     }
     // TODO overwrite start(), stop() and destroy() methods
 }

@@ -1,21 +1,23 @@
 package Monopoly;
 
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author Jordan
  */
-public class Property extends Card implements Improvable
+public class Property extends Space implements Improvable
 {
     protected int price; 
-    private final int BASE,HOUSE1, HOUSE2, HOUSE3, HOUSE4, HOTEL;
+    private final int BASE, HOUSE1, HOUSE2, HOUSE3, HOUSE4, HOTEL;
     private int rent; 
     private String owner;
     private boolean mortgaged;
     
     public Property(String newName, int newPrice, int newRent, int newH1, 
-            int newH2, int newH3, int newH4, int newHotel)
+            int newH2, int newH3, int newH4, int newHotel, Point2D coord)
     {
-        super(newName, "", -1);
+        super(newName, coord, -999);
         price = newPrice;
         BASE = newRent;
         rent = BASE;
@@ -26,8 +28,6 @@ public class Property extends Card implements Improvable
         HOTEL = newHotel;
         owner = "";
         mortgaged = false;
-        property = true;
-        card = false;
     }
     
     /**
@@ -83,16 +83,6 @@ public class Property extends Card implements Improvable
                 + "\n4 Houses: "+HOUSE4
                 + "\nHotel: "+HOTEL;
                 
-    }
-    
-    public boolean isRailroad()
-    {
-        return railroad;
-    }
-    
-    public boolean isUtility()
-    {
-        return utility;
     }
     
     public boolean isMortgaged()
