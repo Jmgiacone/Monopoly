@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
  */
 public class Property extends Space implements Improvable
 {
-    protected int price; 
+    protected final int price, mortgagedPrice; 
     private final int BASE, HOUSE1, HOUSE2, HOUSE3, HOUSE4, HOTEL;
     private int rent; 
     private String owner;
@@ -19,6 +19,7 @@ public class Property extends Space implements Improvable
     {
         super(newName, coord, -999);
         price = newPrice;
+        mortgagedPrice = price / 2;
         BASE = newRent;
         rent = BASE;
         HOUSE1 = newH1;
@@ -45,9 +46,18 @@ public class Property extends Space implements Improvable
      */
     public int getPrice()
     {
+        if(mortgaged)
+        {
+            return mortgagedPrice;
+        }
+        
         return price;
     }
     
+    public int getMortgagedPrice()
+    {
+        return mortgagedPrice;
+    }
     /**
      * Returns the owner of the property. If none, returns the bank.
      * @return 
@@ -93,13 +103,11 @@ public class Property extends Space implements Improvable
     public void mortgage()
     {
         mortgaged = true;
-        price /= 2;
     }
     
     public void unMortgage()
     {
         mortgaged = false;
-        price *= 2;
     }
     
     public int currentRent()

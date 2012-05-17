@@ -35,7 +35,7 @@ public class Player implements Comparable<Player>
     
     public boolean isBankrupt()
     {
-        return bankrupt;
+        return balance < 0;
     }
     public String getName()
     {
@@ -55,30 +55,35 @@ public class Player implements Comparable<Player>
         //If it's a property
         if(s instanceof Property)
         {
+            //If you own it, nothing happens
             if(properties.contains((Property)s))
             {
+                
             }
+            //Not yours, you have to pay
             else
             {
+                //Utilities pay differently
                 if(s instanceof Utility)
                 {
                     Utility u = (Utility)s;
                     if(!u.isOwned())
                     {
-                        //Ask if they want to buy
+                        //TODO: Ask if they want to buy
                         buy(u);
                     }
                     else
                     {
-                    pay(u);
+                        pay(u);
                     }
                 }
+                //RailRoads are special
                 else if(s instanceof RailRoad)
                 {
                     RailRoad r = (RailRoad)s;
                     if(!r.isOwned())
                     {
-                        //Ask if they want to buy
+                        //TODO: Ask if they want to buy
                         buy(r);
                     }
                     else
@@ -88,13 +93,12 @@ public class Player implements Comparable<Player>
                 }
                 else
                 {
-                    Property p;
+                    Property p = (Property)s;
                     //It's just a straight up property
-                    p = (Property)s;
-
+                    
                     if(!p.isOwned())
                     {
-                        //Ask if they want to buy
+                        //TODO: Ask if they want to buy
                         buy(p);
                     }
                     else
@@ -109,9 +113,9 @@ public class Player implements Comparable<Player>
             if(s.getName().equalsIgnoreCase("Income Tax"))
             {
                 int total = balance;
-                for(int i = 0; i < properties.size(); i++)
+                for(Property p : properties)
                 {
-                    total += properties.get(i).getPrice();
+                    total += p.getPrice();
                 }
                 
                 if(total > 2000)
@@ -127,10 +131,12 @@ public class Player implements Comparable<Player>
             else if(s.getName().equalsIgnoreCase("Go to Jail"))
             {
                 inJail = true;
+                //The board index for jail
+                piece.moveTo(9);
             }
             else if(s.getName().equalsIgnoreCase("Chance"))
             {
-                pay(Bank.drawnChance());
+                pay(Bank.drawChance());
             }
             else if(s.getName().equalsIgnoreCase("Community Chest"))
             {
@@ -302,10 +308,10 @@ public class Player implements Comparable<Player>
             else
             {
                 properties.get(properties.indexOf(p)).mortgage();
-                balance += p.getPrice() / 2;
+                balance += p.getMortgagedPrice();
                 
                 return "You successfully mortgaged "+ p.getName() +" for  "
-                        + p.getPrice() / 2;
+                        + p.getMortgagedPrice();
             }
         }
         
@@ -325,23 +331,23 @@ public class Player implements Comparable<Player>
     
     public void bankrupt()
     {
-        Board.bankrupt(this);
+        bankrupt = true;
     }
     
     public String unMortgage(Property p)
     {
         if(properties.contains(p))
         {
-            if(balance - ((p.getPrice() / 2) + ((p.getPrice() / 2) /** .1*/)) <= 0)
+            if(balance - p.getMortgagedPrice() <= 0)
             {
                 return "You don't have enough money to do this";
             }
             
             properties.get(properties.indexOf(p)).unMortgage();
-            balance -= ((p.getPrice() / 2) + ((p.getPrice() / 2) * .1));
+            balance -= p.getMortgagedPrice() /* * 1.1 10 percent interest*/;
             
             return "You successfully unmortgaged "+p.getName()+ " for "+
-                    ((p.getPrice() / 2) + ((p.getPrice() / 2) * .1));
+                    p.getMortgagedPrice() /* * 1.1 10 percent interest*/;
         }
         
         return "You don't own "+ p.getName() + ", therefore you can't "

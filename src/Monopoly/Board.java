@@ -128,35 +128,22 @@ public class Board
     {
         return r.nextInt(players.size()) + 1;
     }
-//    public void start()
-//    {
-//        try
-//        {
-//            b = new Bank(
-//                    Integer.parseInt(
-//                    JOptionPane.showInputDialog(
-//                    "How much money to recieve when you pass go?")));
-//            int j = Integer.parseInt(
-//                    JOptionPane.showInputDialog(
-//                    "How many people are playing today?"));
-//            for(int i = 0; i < j; i++)
-//            {
-//                players.add(new Player(
-//                        JOptionPane.showInputDialog("Player: " +(i + 1)+ 
-//                        " What's your name?"), 
-//                        new Piece(
-//                                JOptionPane.showInputDialog(
-//                    "Which piece would you like?"))));
-//            }
-//        }
-//        catch (NumberFormatException e)
-//        {
-//            JOptionPane.showInputDialog("That's not a number, try again");
-//            start();
-//        }
-//        
-//        
-//    }
+    public void start()
+    {
+        while(!isWinner())
+        {
+            for(Player p : players)
+            {
+                p.roll();
+                p.landOn(board[p.getPiecePosition()]);
+                
+                if(p.isBankrupt())
+                {
+                    bankrupt(p);
+                }
+            }
+        }
+    }
     
     private void move(Player p)
     {
@@ -170,7 +157,7 @@ public class Board
         }
     }
     
-    public static void bankrupt(Player p)
+    private void bankrupt(Player p)
     {
         bankrupt.add(players.remove(players.indexOf(p)));
     }

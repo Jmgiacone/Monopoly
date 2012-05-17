@@ -51,6 +51,11 @@ public class Piece
         return name;
     }
     
+    public void moveTo(int x)
+    {
+        position = x;
+    }
+    
     public String getOwner()
     {
         return owner;
