@@ -24,7 +24,6 @@ public class Space
         reward = newReward;
     }
     
-   
     /**
      * Returns the name of the space
      * @return The name of the space

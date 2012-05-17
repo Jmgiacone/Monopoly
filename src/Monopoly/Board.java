@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -19,7 +18,7 @@ public class Board
     public static ArrayList<Player> players; 
     public static ArrayList<Player> bankrupt;
     private ArrayList <Piece> pieces;
-    private Space[] board;
+    public static Space[] board;
     private Random r;
     
     public Board()
@@ -187,7 +186,6 @@ public class Board
         pieces.add(new Piece("Wheelbarrow"));
         pieces.add(new Piece("Shoe"));
         pieces.add(new Piece("Money Bag"));
-        
     }
     
     public static int findPlayerIndex(String n)
@@ -201,6 +199,7 @@ public class Board
                 return i;
             }
         }
+        
         return -1;
     }
     

@@ -44,7 +44,7 @@ public class SpaceTest {
         System.out.println("isProperty");
         Space instance = null;
         boolean expResult = false;
-        boolean result = instance.isProperty();
+        boolean result = instance instanceof Property;
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

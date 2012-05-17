@@ -10,11 +10,10 @@ import java.util.Random;
 public class Player implements Comparable<Player>
 {
     private String name;
-    private int balance, roll1, roll2;
+    private int balance, roll1, roll2, numRailroadsOwned, numUtilitiesOwned;;
     private Random random;
     private Piece piece;
-    private boolean inJail, doubles, triples, bankrupt;
-    private int numRailroadsOwned;
+    private boolean inJail, doubles, triples, bankrupt; 
     
     private ArrayList<Property> properties;
     
@@ -31,6 +30,7 @@ public class Player implements Comparable<Player>
         triples = false;
         bankrupt = false;
         numRailroadsOwned = 0;
+        numUtilitiesOwned = 0;
     }
     
     public boolean isBankrupt()
@@ -42,6 +42,10 @@ public class Player implements Comparable<Player>
         return name;
     }
     
+    public int getNumUtilities()
+    {
+        return numUtilitiesOwned;
+    }
     public int getNumRailRoads()
     {
         return numRailroadsOwned;
@@ -51,46 +55,52 @@ public class Player implements Comparable<Player>
         //If it's a property
         if(s instanceof Property)
         {
-            if(s instanceof Utility)
+            if(properties.contains((Property)s))
             {
-                Utility u = (Utility)s;
-                if(!u.isOwned())
-                {
-                    //Ask if they want to buy
-                    buy(u);
-                }
-                else
-                {
-                   pay(u);
-                }
-            }
-            else if(s instanceof RailRoad)
-            {
-                RailRoad r = (RailRoad)s;
-                if(!r.isOwned())
-                {
-                    //Ask if they want to buy
-                    buy(r);
-                }
-                else
-                {
-                    pay(r);
-                }
             }
             else
             {
-                Property p;
-                //It's just a straight up property
-                p = (Property)s;
-
-                if(!p.isOwned())
+                if(s instanceof Utility)
                 {
-                    //Ask if they want to buy
-                    buy(p);
+                    Utility u = (Utility)s;
+                    if(!u.isOwned())
+                    {
+                        //Ask if they want to buy
+                        buy(u);
+                    }
+                    else
+                    {
+                    pay(u);
+                    }
+                }
+                else if(s instanceof RailRoad)
+                {
+                    RailRoad r = (RailRoad)s;
+                    if(!r.isOwned())
+                    {
+                        //Ask if they want to buy
+                        buy(r);
+                    }
+                    else
+                    {
+                        pay(r);
+                    }
                 }
                 else
                 {
-                    pay(p);
+                    Property p;
+                    //It's just a straight up property
+                    p = (Property)s;
+
+                    if(!p.isOwned())
+                    {
+                        //Ask if they want to buy
+                        buy(p);
+                    }
+                    else
+                    {
+                        pay(p);
+                    }
                 }
             }
         }
@@ -145,6 +155,10 @@ public class Player implements Comparable<Player>
     {
         balance += s.getReward();
     }
+    private int RRPayout(int numRR)
+    {
+        return (int)(25 * Math.pow(2, numRR - 1));
+    }
     public void pay(RailRoad r)
     {
         if(r.getOwner().equalsIgnoreCase(name))
@@ -153,31 +167,60 @@ public class Player implements Comparable<Player>
         }
         else if(!r.isMortgaged())
         {
+            Player p = Board.players.get(
+                Board.findPlayerIndex(
+                r.getOwner()));
             
+            if(p.numRailroadsOwned == 0)
+            {
+                throw new IllegalStateException(p.getName() + " does not own " + r.getName());
+            }
+            
+            int x = RRPayout(p.numRailroadsOwned);
+            balance -= x;
+            p.acceptPayment(x);
         }
         //Mortgaged, no Payment. GG
-        numRailroadsOwned++;
     }
     public void pay(Utility u)
     {
+        Player p = Board.players.get(
+                Board.findPlayerIndex(
+                u.getOwner()));
         
+        if(p.getNumUtilities() == 1)
+        {
+            int x = 4 * (roll1 + roll2);
+            p.acceptPayment(x);
+            balance -= x;
+        }
+        else if(p.getNumUtilities() == 2)
+        {
+            int x = 12 * (roll1 + roll2);
+            p.acceptPayment(x);
+            balance -= x;
+        }
+        else
+        {
+            throw new IllegalStateException(p.getName() + " does not own " + u.getName());
+        }
     }
     public void pay(Property p)
     {
-//        if(p.getOwner().equalsIgnoreCase(name))
-//        {
-//            //Your property, no rent paid
-//        }
-//        else if(!p.isMortgaged())
-//        {
-//            balance -= p.currentRent();
-//            Board.players.get(
-//                    Board.findPlayerIndex(
-//                    p.getOwner())).
-//                    acceptPayment(
-//                    p.currentRent());
-//        }
-//        //Mortgaged, no Payment. GG
+        if(p.getOwner().equalsIgnoreCase(name))
+        {
+            //Your property, no rent paid
+        }
+        else if(!p.isMortgaged())
+        {
+            balance -= p.currentRent();
+            Board.players.get(
+                    Board.findPlayerIndex(
+                    p.getOwner())).
+                    acceptPayment(
+                    p.currentRent());
+        }
+        //Mortgaged, no Payment. GG
     }
     
     public void acceptPayment(int payment)
@@ -193,14 +236,14 @@ public class Player implements Comparable<Player>
         roll1 =  random.nextInt(6) + 1;
         roll2 = random.nextInt(6) + 1;
         
-//        if(roll1 == roll2 && !doubles)
-//        {
-//            doubles = true;
-//        }
-//        if (roll1 == roll2 && doubles)
-//        {
-//            triples = true;
-//        }
+        if(roll1 == roll2 && !doubles && !triples)
+        {
+            doubles = true;
+        }
+        if (roll1 == roll2 && doubles && !triples)
+        {
+            triples = true;
+        }
         
         piece.move(roll1 + roll2);
         
@@ -227,7 +270,18 @@ public class Player implements Comparable<Player>
             balance -= p.getPrice();
             properties.add(p);
             Bank.remove(p);
-            return "You successfully bought "+p.getName();
+            
+            if(p instanceof RailRoad)
+            {
+                numRailroadsOwned++;
+            }
+            else if(p instanceof Utility)
+            {
+                numUtilitiesOwned++;
+            }
+            return name + " successfully bought "+p.getName();
+            
+            
             //Have bank remove the property
         }
         
@@ -261,7 +315,7 @@ public class Player implements Comparable<Player>
     }
     
     /**
-     * jordan
+     * Jordan Giacone 
      * @param other 
      */
     public void tradeWith(Player other)
