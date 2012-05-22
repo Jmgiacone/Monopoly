@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
  */
 public class RailRoad extends Property
 {
-    public RailRoad(String newName, int newPrice, Point2D coord)
+    public RailRoad(String newName, int newPrice, Point2D.Double coord)
     {
        super(newName, newPrice,-1,-1,-1,-1,-1,-1, coord);
     }

@@ -1,6 +1,10 @@
 package Monopoly;
 
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -9,7 +13,7 @@ import java.io.File;
 public class Piece 
 {
     private String name, owner;
-    private File image;
+    private BufferedImage image;
     private int position;
     boolean claimed;
     
@@ -18,10 +22,34 @@ public class Piece
         owner = "";
         position = 0;
         name = newName;
-        //image = newImage;
+        image = setUpImage();
         claimed = false;
     }
     
+    private BufferedImage setUpImage()
+    {
+        BufferedImage bi = null;
+        int w, h, cw, ch; 
+        try 
+        {             
+            bi = ImageIO.read(new File("Thimble.gif"));             
+            //w = bi.getWidth(null);             
+            //h = bi.getHeight(null);         
+        } 
+        catch (IOException e) 
+        {             
+            System.out.println("Image could not be read");            
+            System.exit(1); 
+        }
+        
+        return bi;
+
+    }
+    
+    public Point2D.Double getCoords()
+    {
+        return Board.board[position].getCoords();
+    }
     public boolean isClaimed()
     {
         return claimed;

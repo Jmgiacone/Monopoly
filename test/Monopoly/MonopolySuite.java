@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author Jordan
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({Monopoly.MonopolyGUITest.class, Monopoly.ImprovableTest.class, Monopoly.CardTest.class, Monopoly.PlayerTest.class, Monopoly.BankTest.class, Monopoly.UtilityTest.class, Monopoly.PieceTest.class, Monopoly.PropertyTest.class, Monopoly.RailRoadTest.class, Monopoly.SpaceTest.class, Monopoly.BoardTest.class})
+@Suite.SuiteClasses({MonopolyGUITest.class, ImprovableTest.class, CardTest.class, PlayerTest.class, BankTest.class, UtilityTest.class, PieceTest.class, PropertyTest.class, MonopTesterTest.class, RailRoadTest.class, SpaceTest.class, BoardTest.class})
 public class MonopolySuite {
 
     @BeforeClass

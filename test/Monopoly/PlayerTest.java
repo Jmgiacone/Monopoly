@@ -4,6 +4,7 @@
  */
 package Monopoly;
 
+import java.awt.geom.Point2D;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -57,8 +58,9 @@ public class PlayerTest {
     public void testLandOn() {
         System.out.println("landOn");
         Space s = null;
-        Player instance = null;
-        instance.landOn(s);
+        Player instance = new Player(null, null);
+        instance.landOn(new Property(
+                "Kentucky Avenue", 220, 18, 90, 250, 700, 875, 1050, new Point2D.Double(145,55)));
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -182,6 +184,153 @@ public class PlayerTest {
         Player instance = null;
         String expResult = "";
         String result = instance.unMortgage(p);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isBankrupt method, of class Player.
+     */
+    @Test
+    public void testIsBankrupt() {
+        System.out.println("isBankrupt");
+        Player instance = null;
+        boolean expResult = false;
+        boolean result = instance.isBankrupt();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNumUtilities method, of class Player.
+     */
+    @Test
+    public void testGetNumUtilities() {
+        System.out.println("getNumUtilities");
+        Player instance = null;
+        int expResult = 0;
+        int result = instance.getNumUtilities();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNumRailRoads method, of class Player.
+     */
+    @Test
+    public void testGetNumRailRoads() {
+        System.out.println("getNumRailRoads");
+        Player instance = null;
+        int expResult = 0;
+        int result = instance.getNumRailRoads();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pay method, of class Player.
+     */
+    @Test
+    public void testPay_Card() {
+        System.out.println("pay");
+        Card c = null;
+        Player instance = null;
+        instance.pay(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pay method, of class Player.
+     */
+    @Test
+    public void testPay_Space() {
+        System.out.println("pay");
+        Space s = null;
+        Player instance = null;
+        instance.pay(s);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pay method, of class Player.
+     */
+    @Test
+    public void testPay_RailRoad() {
+        System.out.println("pay");
+        RailRoad r = null;
+        Player instance = null;
+        instance.pay(r);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pay method, of class Player.
+     */
+    @Test
+    public void testPay_Utility() {
+        System.out.println("pay");
+        Utility u = null;
+        Player instance = null;
+        instance.pay(u);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pay method, of class Player.
+     */
+    @Test
+    public void testPay_Property() {
+        System.out.println("pay");
+        Property p = null;
+        Player instance = null;
+        instance.pay(p);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of acceptPayment method, of class Player.
+     */
+    @Test
+    public void testAcceptPayment() {
+        System.out.println("acceptPayment");
+        int payment = 0;
+        Player instance = null;
+        instance.acceptPayment(payment);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of bankrupt method, of class Player.
+     */
+    @Test
+    public void testBankrupt() {
+        System.out.println("bankrupt");
+        Player instance = null;
+        instance.bankrupt();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of compareTo method, of class Player.
+     */
+    @Test
+    public void testCompareTo() {
+        System.out.println("compareTo");
+        Player p = null;
+        Player instance = null;
+        int expResult = 0;
+        int result = instance.compareTo(p);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

@@ -47,4 +47,16 @@ public class MonopolyGUITest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of init method, of class MonopolyGUI.
+     */
+    @Test
+    public void testInit() {
+        System.out.println("init");
+        MonopolyGUI instance = new MonopolyGUI();
+        instance.init();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -15,7 +15,7 @@ public class Property extends Space implements Improvable
     private boolean mortgaged;
     
     public Property(String newName, int newPrice, int newRent, int newH1, 
-            int newH2, int newH3, int newH4, int newHotel, Point2D coord)
+            int newH2, int newH3, int newH4, int newHotel, Point2D.Double coord)
     {
         super(newName, coord, -999);
         price = newPrice;

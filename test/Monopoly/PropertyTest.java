@@ -141,4 +141,32 @@ public class PropertyTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getMortgagedPrice method, of class Property.
+     */
+    @Test
+    public void testGetMortgagedPrice() {
+        System.out.println("getMortgagedPrice");
+        Property instance = null;
+        int expResult = 0;
+        int result = instance.getMortgagedPrice();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of currentRent method, of class Property.
+     */
+    @Test
+    public void testCurrentRent() {
+        System.out.println("currentRent");
+        Property instance = null;
+        int expResult = 0;
+        int result = instance.currentRent();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

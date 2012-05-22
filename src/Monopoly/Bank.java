@@ -8,10 +8,9 @@ import java.util.ArrayList;
  */
 public class Bank 
 {
-    public static int PASS_GO_AMOUNT, LAND_ON_GO_AMOUNT;
-    
-    private static ArrayList<Property> properties;
-    private static ArrayList<Card> chance, communityChest;
+    public int PASS_GO_AMOUNT, LAND_ON_GO_AMOUNT;
+    private ArrayList<Property> properties;
+    private ArrayList<Card> chance, communityChest;
     
     //Bank never runs out of money, no need for a balance variable
     public Bank(int passGo)
@@ -25,11 +24,11 @@ public class Bank
         initCards();
     }
     
-    public static void remove(Property p)
+    public void remove(Property p)
     {
         properties.remove(p);
     }        
-    public static Property getProperty(String s)
+    public Property getProperty(String s)
     {
         for(Property p : properties)
         {
@@ -42,13 +41,13 @@ public class Bank
         return null;
     }
     
-    public static Card drawChance()
+    public Card drawChance()
     {
         Card c = chance.get(0);
         chance.add(chance.remove(0));
         return c;
     }
-    public static Card drawCommunityChest()
+    public Card drawCommunityChest()
     {
         Card c = communityChest.get(0);
         communityChest.add(communityChest.remove(0));

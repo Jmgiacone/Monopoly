@@ -4,6 +4,7 @@
  */
 package Monopoly;
 
+import java.awt.geom.Point2D.Double;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -59,6 +60,34 @@ public class SpaceTest {
         Space instance = null;
         String expResult = "";
         String result = instance.getName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCoords method, of class Space.
+     */
+    @Test
+    public void testGetCoords() {
+        System.out.println("getCoords");
+        Space instance = null;
+        Double expResult = null;
+        Double result = instance.getCoords();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getReward method, of class Space.
+     */
+    @Test
+    public void testGetReward() {
+        System.out.println("getReward");
+        Space instance = null;
+        int expResult = 0;
+        int result = instance.getReward();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

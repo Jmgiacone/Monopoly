@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
 public class Space 
 {
     protected String name;
-    protected final Point2D coords;
+    protected final Point2D.Double coords;
     protected final int reward;
     
     /**
@@ -17,7 +17,7 @@ public class Space
      * otherwise later)
      * @param newName The name to be given
      */
-    public Space(String newName, Point2D coord, int newReward)
+    public Space(String newName, Point2D.Double coord, int newReward)
     {
         name = newName;
         coords = coord;
@@ -33,6 +33,10 @@ public class Space
         return name;
     }
     
+    public Point2D.Double getCoords()
+    {
+        return coords;
+    }
     public int getReward()
     {
         return reward;
