@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Monopoly;
 
 import java.awt.BorderLayout;
-import javax.swing.*;
+import javax.swing.JApplet;
+import javax.swing.JPanel;
 
 /**
  *
@@ -13,12 +10,12 @@ import javax.swing.*;
  */
 public class MonopolyGUI extends JApplet 
 {
-    private Board b;
+    public static Board b;
     private JPanel topButtons, bottomButtons;
     
     public MonopolyGUI()
     {
-        b = new Board();
+        b = new Board(200, true);
         initButtons();
         initPanels();
         addElements();

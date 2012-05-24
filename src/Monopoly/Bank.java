@@ -13,10 +13,18 @@ public class Bank
     private ArrayList<Card> chance, communityChest;
     
     //Bank never runs out of money, no need for a balance variable
-    public Bank(int passGo)
+    public Bank(int passGo, boolean landOnDouble)
     {
         PASS_GO_AMOUNT = passGo;
-        LAND_ON_GO_AMOUNT = PASS_GO_AMOUNT * 2;
+        if(landOnDouble)
+        {
+            LAND_ON_GO_AMOUNT = PASS_GO_AMOUNT * 2;
+        }
+        else
+        {
+            LAND_ON_GO_AMOUNT = PASS_GO_AMOUNT;
+        }
+        
         properties = new ArrayList<>();
         chance = new ArrayList<>();
         communityChest = new ArrayList<>();

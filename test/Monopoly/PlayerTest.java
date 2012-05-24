@@ -47,8 +47,8 @@ public class PlayerTest {
         String expResult = "";
         String result = instance.getName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -59,10 +59,12 @@ public class PlayerTest {
         System.out.println("landOn");
         Space s = null;
         Player instance = new Player(null, null);
+        Board b = new Board(200, false);
+        
         instance.landOn(new Property(
                 "Kentucky Avenue", 220, 18, 90, 250, 700, 875, 1050, new Point2D.Double(145,55)));
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -75,8 +77,8 @@ public class PlayerTest {
         int expResult = 0;
         int result = instance.getPiecePosition();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -87,8 +89,8 @@ public class PlayerTest {
         System.out.println("roll");
         Player instance = null;
         instance.roll();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -101,8 +103,8 @@ public class PlayerTest {
         int expResult = 0;
         int result = instance.getRoll1();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -115,8 +117,8 @@ public class PlayerTest {
         int expResult = 0;
         int result = instance.getRoll2();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -129,8 +131,8 @@ public class PlayerTest {
         int expResult = 0;
         int result = instance.getBalance();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -142,8 +144,8 @@ public class PlayerTest {
         Property p = null;
         Player instance = null;
         instance.buy(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -157,8 +159,8 @@ public class PlayerTest {
         String expResult = "";
         String result = instance.mortgage(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -170,8 +172,8 @@ public class PlayerTest {
         Player other = null;
         Player instance = null;
         instance.tradeWith(other);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -185,8 +187,8 @@ public class PlayerTest {
         String expResult = "";
         String result = instance.unMortgage(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -199,8 +201,8 @@ public class PlayerTest {
         boolean expResult = false;
         boolean result = instance.isBankrupt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -213,8 +215,8 @@ public class PlayerTest {
         int expResult = 0;
         int result = instance.getNumUtilities();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -223,12 +225,11 @@ public class PlayerTest {
     @Test
     public void testGetNumRailRoads() {
         System.out.println("getNumRailRoads");
-        Player instance = null;
-        int expResult = 0;
-        int result = instance.getNumRailRoads();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player instance = new Player("Jordan", new Piece("Money Bag"));
+        
+        assertTrue(instance.getNumRailRoads() == 0);
+        
+        
     }
 
     /**
@@ -237,11 +238,15 @@ public class PlayerTest {
     @Test
     public void testPay_Card() {
         System.out.println("pay");
-        Card c = null;
-        Player instance = null;
+        Card c = new Card("", "", -100);
+        Player instance = new Player("Jordan", new Piece("Money Bag"));
         instance.pay(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertTrue(instance.getBalance() < 1500);
+        assertFalse(instance.getBalance() == 1500);
+        assertTrue(instance.getBalance() == instance.getBalance() - c.getReward());
+        
+        
     }
 
     /**
@@ -250,11 +255,15 @@ public class PlayerTest {
     @Test
     public void testPay_Space() {
         System.out.println("pay");
-        Space s = null;
-        Player instance = null;
+        Space s = new Space(null, null, -1000);
+        Player instance = new Player("Jordan", new Piece("Money Bag"));
         instance.pay(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertTrue(instance.getBalance() < 1500);
+        assertFalse(instance.getBalance() == 1500);
+        assertTrue(instance.getBalance() == instance.getBalance() - s.getReward());
+        
+        
     }
 
     /**
@@ -263,11 +272,15 @@ public class PlayerTest {
     @Test
     public void testPay_RailRoad() {
         System.out.println("pay");
-        RailRoad r = null;
-        Player instance = null;
+        RailRoad r = new RailRoad("It", 500, null);
+        Player instance = new Player("Jordan", new Piece("Money Bag"));
         instance.pay(r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertTrue(instance.getBalance() < 1500);
+        assertFalse(instance.getBalance() == 1500);
+        assertTrue(instance.getBalance() == instance.getBalance() - r.getReward());
+        
+        
     }
 
     /**
@@ -276,11 +289,15 @@ public class PlayerTest {
     @Test
     public void testPay_Utility() {
         System.out.println("pay");
-        Utility u = null;
-        Player instance = null;
-        instance.pay(u);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Utility c = new Utility("", 500, null);
+        Player instance = new Player("Jordan", new Piece("Money Bag"));
+        instance.pay(c);
+        
+        assertTrue(instance.getBalance() < 1500);
+        assertFalse(instance.getBalance() == 1500);
+        assertTrue(instance.getBalance() == instance.getBalance() - c.getReward());
+        
+        
     }
 
     /**
@@ -289,11 +306,15 @@ public class PlayerTest {
     @Test
     public void testPay_Property() {
         System.out.println("pay");
-        Property p = null;
-        Player instance = null;
-        instance.pay(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Property c = new Property("", 500, 20 ,0, 0, 0 ,0 ,0, null);
+        Player instance = new Player("Jordan", new Piece("Money Bag"));
+        instance.pay(c);
+        
+        assertTrue(instance.getBalance() < 1500);
+        assertFalse(instance.getBalance() == 1500);
+        assertTrue(instance.getBalance() == instance.getBalance() - c.getReward());
+        
+        
     }
 
     /**
@@ -305,8 +326,8 @@ public class PlayerTest {
         int payment = 0;
         Player instance = null;
         instance.acceptPayment(payment);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -317,8 +338,8 @@ public class PlayerTest {
         System.out.println("bankrupt");
         Player instance = null;
         instance.bankrupt();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -332,7 +353,7 @@ public class PlayerTest {
         int expResult = 0;
         int result = instance.compareTo(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 }

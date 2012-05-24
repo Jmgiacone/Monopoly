@@ -17,13 +17,15 @@ public class Board
 {
     public static ArrayList<Player> players; 
     public static ArrayList<Player> bankrupt;
+    public static Bank b;
     private ArrayList <Piece> pieces;
     public static Space[] board;
     private Random r;
     
-    public Board()
+    public Board(int passGo, boolean landOnDouble)
     {
         r = new Random();
+        b = new Bank(passGo, landOnDouble);
         bankrupt = new ArrayList<>();
         players = new ArrayList<>();
         pieces = new ArrayList<>();
@@ -128,6 +130,7 @@ public class Board
     {
         return r.nextInt(players.size()) + 1;
     }
+    
     public void start()
     {
         while(!isWinner())
@@ -161,6 +164,7 @@ public class Board
     {
         bankrupt.add(players.remove(players.indexOf(p)));
     }
+    
     private void initPieces()
     {
         pieces.add(new Piece("Cannon"));
@@ -192,7 +196,7 @@ public class Board
     
     private void initSpaces()
     {
-        board[39] = new Space("Go", new Point2D.Double(795,795), Bank.PASS_GO_AMOUNT);
+        board[39] = new Space("Go", new Point2D.Double(795,795), b.PASS_GO_AMOUNT);
         board[38] = new Property(
                 "Mediterranean Avenue", 60, 2, 10, 30, 90, 160, 250, new Point2D.Double(705,795));
         board[37] = new Space("Community Chest", new Point2D.Double(635,795), 0);
@@ -260,33 +264,5 @@ public class Board
         board[1] = new Space("Luxury Tax", new Point2D.Double(795,635), -75);
         board[0] = new Property(
                 "Boardwalk", 400, 50, 200, 600, 1400, 1700, 2000, new Point2D.Double(795,705));
-        
-         
-         
-         
-         
-        
-        
-        
-        
-       
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
 }

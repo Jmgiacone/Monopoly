@@ -131,16 +131,16 @@ public class Player implements Comparable<Player>
             else if(s.getName().equalsIgnoreCase("Go to Jail"))
             {
                 inJail = true;
-                //The board index for jail
+                //The MonopolyGUI.b index for jail
                 piece.moveTo(9);
             }
             else if(s.getName().equalsIgnoreCase("Chance"))
             {
-                pay(Bank.drawChance());
+                pay(MonopolyGUI.b.b.drawChance());
             }
             else if(s.getName().equalsIgnoreCase("Community Chest"))
             {
-                pay(Bank.drawCommunityChest());
+                pay(MonopolyGUI.b.b.drawCommunityChest());
             }
             else if(s.getName().equalsIgnoreCase("Free Parking"))
             {
@@ -173,8 +173,8 @@ public class Player implements Comparable<Player>
         }
         else if(!r.isMortgaged())
         {
-            Player p = Board.players.get(
-                Board.findPlayerIndex(
+            Player p = MonopolyGUI.b.players.get(
+                MonopolyGUI.b.findPlayerIndex(
                 r.getOwner()));
             
             if(p.numRailroadsOwned == 0)
@@ -190,8 +190,8 @@ public class Player implements Comparable<Player>
     }
     public void pay(Utility u)
     {
-        Player p = Board.players.get(
-                Board.findPlayerIndex(
+        Player p = MonopolyGUI.b.players.get(
+                MonopolyGUI.b.findPlayerIndex(
                 u.getOwner()));
         
         if(p.getNumUtilities() == 1)
@@ -220,8 +220,8 @@ public class Player implements Comparable<Player>
         else if(!p.isMortgaged())
         {
             balance -= p.currentRent();
-            Board.players.get(
-                    Board.findPlayerIndex(
+            MonopolyGUI.b.players.get(
+                    MonopolyGUI.b.findPlayerIndex(
                     p.getOwner())).
                     acceptPayment(
                     p.currentRent());
@@ -275,7 +275,7 @@ public class Player implements Comparable<Player>
         {
             balance -= p.getPrice();
             properties.add(p);
-            Bank.remove(p);
+            MonopolyGUI.b.b.remove(p);
             
             if(p instanceof RailRoad)
             {

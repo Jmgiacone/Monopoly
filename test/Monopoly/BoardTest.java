@@ -39,8 +39,8 @@ public class BoardTest {
 
     @Test
     public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -49,12 +49,12 @@ public class BoardTest {
     @Test
     public void testGetBoard() {
         System.out.println("getBoard");
-        Board instance = new Board();
+        Board instance = new Board(200, true);
         JPanel expResult = null;
         JPanel result = instance.getBoard();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -67,8 +67,8 @@ public class BoardTest {
         boolean expResult = false;
         boolean result = instance.isWinner();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -81,8 +81,8 @@ public class BoardTest {
         int expResult = 0;
         int result = instance.chooseFirst();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -93,8 +93,8 @@ public class BoardTest {
         System.out.println("start");
         Board instance = new Board();
         instance.start();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -107,7 +107,7 @@ public class BoardTest {
         int expResult = 0;
         int result = Board.findPlayerIndex(n);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 }
