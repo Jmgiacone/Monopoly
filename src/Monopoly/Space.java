@@ -33,10 +33,19 @@ public class Space
         return name;
     }
     
+    /**
+     * Gets the coordinates that the Piece lands on
+     * @return The coordinates
+     */
     public Point2D.Double getCoords()
     {
         return coords;
     }
+    
+    /**
+     * The reward of the Space
+     * @return Reward
+     */
     public int getReward()
     {
         return reward;

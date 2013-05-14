@@ -1,1 +1,10 @@
 *.class
+/build/
+*.iml
+*.idea
+*.xml
+*.policy
+*.zip
+*.mf
+*.db
+/Old/
