@@ -8,3 +8,4 @@
 *.mf
 *.db
 /Old/
+*.properties
