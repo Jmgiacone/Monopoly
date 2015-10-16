@@ -11,24 +11,31 @@ import javax.swing.JOptionPane;
  *
  * @author Jordan
  */
-public class Piece 
+public enum Piece 
 {
-    private String name, owner;
+    CANNON,
+    DOG,
+    BATTLESHIP,
+    CAR,
+    IRON,
+    TOP_HAT,
+    THIMBLE,
+    WHEELBARROW,
+    SHOE,
+    MONEY_BAG;
+
+    private String name;
     private BufferedImage image;
     private int position;
-    boolean claimed;
     
     /**
      * Constructs a Piece object with Given name
-     * @param newName The name of the Piece
      */
-    public Piece(String newName)
+    Piece()
     {
-        owner = "";
         position = 0;
-        name = newName;
-        setUpImage("images/pieces/"+name+".png");
-        claimed = false;
+        name = super.toString().substring(0, 1) + super.toString().replace('_', ' ').substring(1).toLowerCase();
+        setUpImage("images/pieces/" + name + ".png");
     }
     
     private void setUpImage(String path)
@@ -39,8 +46,7 @@ public class Piece
         }
         catch(IOException e)
         {
-            JOptionPane.showMessageDialog(null, "Image couldn't be found at " 
-                    + path);
+            JOptionPane.showMessageDialog(null, "Image couldn't be found at " + path);
             System.exit(0);
         }
     }
@@ -95,14 +101,10 @@ public class Piece
     {
         position = x;
     }
-    
-    /**
-     * Gets the owner of the Piece
-     * @return The owner of the piece
-     */
-    public String getOwner()
+
+    @Override
+    public String toString()
     {
-        return owner;
+        return name;
     }
-    
 }

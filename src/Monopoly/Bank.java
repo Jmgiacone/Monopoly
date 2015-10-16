@@ -12,7 +12,7 @@ public class Bank
 {
     private InitGameDialog playerFrame;
     private boolean tripDoubleJail;
-    public int PASS_GO_AMOUNT, LAND_ON_GO_AMOUNT;
+    public final int PASS_GO_AMOUNT, LAND_ON_GO_AMOUNT;
     private Board b;
     private int currentPlayer;
     private ArrayList<Property> properties;
@@ -37,15 +37,8 @@ public class Bank
         pieces = new ArrayList<>();
         initPieces();
         PASS_GO_AMOUNT = playerFrame.getPassGoAmount();
-        
-        if(playerFrame.landOnGo())
-        {
-            LAND_ON_GO_AMOUNT = PASS_GO_AMOUNT * 2;
-        }
-        else
-        {
-            LAND_ON_GO_AMOUNT = PASS_GO_AMOUNT;
-        }
+
+        LAND_ON_GO_AMOUNT = PASS_GO_AMOUNT * (2 * (playerFrame.landOnGo() ? 1 : 0));
         
         initCards();
         
@@ -163,16 +156,16 @@ public class Bank
     private void initPieces()
     {
         pieces = new ArrayList<>();
-        pieces.add(new Piece("Cannon"));
-        pieces.add(new Piece("Dog"));
-        pieces.add(new Piece("BattleShip"));
-        pieces.add(new Piece("Car"));
-        pieces.add(new Piece("Iron"));
-        pieces.add(new Piece("Top Hat"));
-        pieces.add(new Piece("Thimble"));
-        pieces.add(new Piece("Wheelbarrow"));
-        pieces.add(new Piece("Shoe"));
-        pieces.add(new Piece("Money Bag"));
+        pieces.add(Piece.CANNON);
+        pieces.add(Piece.DOG);
+        pieces.add(Piece.BATTLESHIP);
+        pieces.add(Piece.CAR);
+        pieces.add(Piece.IRON);
+        pieces.add(Piece.TOP_HAT);
+        pieces.add(Piece.THIMBLE);
+        pieces.add(Piece.WHEELBARROW);
+        pieces.add(Piece.SHOE);
+        pieces.add(Piece.MONEY_BAG);
     }
     /**
      * Removes a Property from the Banks List
