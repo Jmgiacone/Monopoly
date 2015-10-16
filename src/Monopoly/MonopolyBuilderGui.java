@@ -8,6 +8,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -15,7 +17,7 @@ import javax.swing.*;
  *
  * @author Jordan
  */
-public class MonopBuilderGui extends javax.swing.JFrame 
+public class MonopolyBuilderGui extends javax.swing.JFrame
 {
     protected Board b;
     private Bank bank;
@@ -54,7 +56,12 @@ public class MonopBuilderGui extends javax.swing.JFrame
             
             d.setTitle("Trade with whom..?");
             box = new JComboBox();
-            box.setModel(new DefaultComboBoxModel(bank.getPlayerNames()));
+
+            //Get all player names and remove current player's name
+            ArrayList<String> names = new ArrayList<>(Arrays.asList(bank.getPlayerNames()));
+            names.remove(currentPlayer.getName());
+
+            box.setModel(new DefaultComboBoxModel(names.toArray()));
             d.add(box, BorderLayout.NORTH);
             JButton ok = new JButton("Ok");
             ok.addActionListener(new OKListener(d));
@@ -147,9 +154,9 @@ public class MonopBuilderGui extends javax.swing.JFrame
         
     }
     /**
-     * Creates new form MonopBuilderGui
+     * Creates new form MonopolyBuilderGui
      */
-    public MonopBuilderGui() 
+    public MonopolyBuilderGui()
     {
         bank = new Bank();
         b = new Board();
@@ -212,6 +219,7 @@ public class MonopBuilderGui extends javax.swing.JFrame
         backgroundLabel = new JLabel(overlayImages(pieceImages));
         jScrollPane1 = new javax.swing.JScrollPane();
         logTextArea = new javax.swing.JTextArea();
+        logTextArea.setEditable(false);
         bottomButtonPanel = new javax.swing.JPanel();
         rollButton = new javax.swing.JButton();
         finishTurnButton = new javax.swing.JButton();
@@ -367,8 +375,7 @@ public class MonopBuilderGui extends javax.swing.JFrame
     /**
      * Method to overlay Images
      *
-     * @param bgImage --> The background Image
-     * @param fgImage --> The foreground Image
+     * @param fgImages --> The background Image
      * @return --> overlayed image (fgImage over bgImage)
      */
     private ImageIcon overlayImages(BufferedImage[] fgImages) 
@@ -394,17 +401,14 @@ public class MonopBuilderGui extends javax.swing.JFrame
         
         /**Create a Graphics  from the background image**/
         Graphics2D g = bgImage.createGraphics();
-        /**Set Antialias Rendering**/
-        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         /**
-         * Draw background image at location (0,0)
-         * You can change the (x,y) value as required
+         * Draw background image at location (0,0)You can change the (x,y) value as required
          */
         g.drawImage(bgImage, 0, 0, null);
 
         /**
          * Draw foreground image at location (0,0)
-         * Change (x,y) value as required.
          */
         int i = 0, x, y; 
         for(BufferedImage im : fgImages)
@@ -522,13 +526,13 @@ public class MonopBuilderGui extends javax.swing.JFrame
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MonopBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonopolyBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MonopBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonopolyBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MonopBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonopolyBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MonopBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonopolyBuilderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -538,7 +542,7 @@ public class MonopBuilderGui extends javax.swing.JFrame
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new MonopBuilderGui().setVisible(true);
+                new MonopolyBuilderGui().setVisible(true);
             }
         });
     }

@@ -21,12 +21,12 @@ public class TradeDialog extends javax.swing.JDialog
 
     private class TradeListener implements ActionListener
     {
-
         private JDialog di;
         public TradeListener(JDialog d)
         {
             di = d;
         }
+
         @Override
         public void actionPerformed(ActionEvent e) 
         {
@@ -52,10 +52,7 @@ public class TradeDialog extends javax.swing.JDialog
                p1.acceptPayment(-1 * Integer.parseInt(p1MoneyLabel.getText()));
                p2.acceptPayment(Integer.parseInt(p1MoneyLabel.getText()));
            }
-           
-           
-           
-           
+
            for(Property p : p1Trade)
            {
                p.setOwner(p2.getName());
