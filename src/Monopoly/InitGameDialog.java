@@ -3,6 +3,8 @@ package Monopoly;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import javax.swing.*;
 
 /**
@@ -13,7 +15,7 @@ public class InitGameDialog extends javax.swing.JDialog
 {
     
     private ArrayList<Player> players;
-    private ArrayList<Piece> pieces;
+    private ArrayList<Piece> pieces, availablePieces;
     private ArrayList<JComboBox> comboBoxes;
     private ArrayList<JTextField> textFields;
     private ArrayList<JButton> lockInButtons;
@@ -25,33 +27,54 @@ public class InitGameDialog extends javax.swing.JDialog
         private JTextField text;
         private JComboBox box;
         private JButton button;
-        private int passGo;
+
         public LockInListener(JTextField text, JComboBox box, JButton button)
         {
             this.text = text;
             this.box = box;
             this.button = button;
-            //box.getModel().
         }
         
         @Override
         public void actionPerformed(ActionEvent e) 
         {
+            ArrayList<String> selections = new ArrayList<>();
+
             lockInsPressed++;
             button.setEnabled(false);
             text.setEditable(false);
+            button.setText(text.getText().equalsIgnoreCase("") ? "No Player" : "Locked In");
+            text.setEnabled(false);
             box.setEnabled(false);
-            if(lockInsPressed == 10)
+
+            availablePieces.remove(Piece.valueOf(((String) box.getSelectedItem()).replace(" ", "_").toUpperCase()));
+
+            if(button.getText().equalsIgnoreCase("Locked In"))
+            {
+                for (Piece p : availablePieces)
+                {
+                    selections.add(p.toString());
+                }
+
+                for (JComboBox b : comboBoxes)
+                {
+                    if (b.isEnabled())
+                    {
+                        b.setModel(new DefaultComboBoxModel(selections.toArray()));
+                    }
+                }
+            }
+            if (lockInsPressed == 10)
             {
                 okButton.setEnabled(true);
             }
             else
             {
-                //Do nothing
+                //Still need people to lock in. Do nothing
             }
         }
-        
     }
+
     private class GoButtonListener implements ActionListener
     {
         @Override
@@ -75,6 +98,7 @@ public class InitGameDialog extends javax.swing.JDialog
                     okButton.setEnabled(false);
                     for(int i = 0; i < 10; i++)
                     {
+                        //A real player locked in
                         if(!textFields.get(i).getText().equalsIgnoreCase(""))
                         {
                             players.add(new Player(textFields.get(i).getText(), 
@@ -99,6 +123,7 @@ public class InitGameDialog extends javax.swing.JDialog
             }
         }
     }
+
     /**
      * Creates new form InitGameDialog
      */
@@ -106,19 +131,14 @@ public class InitGameDialog extends javax.swing.JDialog
     {
         super(parent, modal);
         setTitle("Create Players");
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         initComponents();
         choices = new boolean[3];
         pieces = new ArrayList<>();
-        pieces.add(new Piece("Cannon"));
-        pieces.add(new Piece("Dog"));
-        pieces.add(new Piece("BattleShip"));
-        pieces.add(new Piece("Car"));
-        pieces.add(new Piece("Iron"));
-        pieces.add(new Piece("Top Hat"));
-        pieces.add(new Piece("Thimble"));
-        pieces.add(new Piece("Wheelbarrow"));
-        pieces.add(new Piece("Shoe"));
-        pieces.add(new Piece("Money Bag"));
+        availablePieces = new ArrayList<>();
+
+        Collections.addAll(pieces, Piece.values());
+        Collections.addAll(availablePieces, Piece.values());
         lockInsPressed = 0;
         
         lockInButtons = new ArrayList<>();
@@ -147,17 +167,14 @@ public class InitGameDialog extends javax.swing.JDialog
         
         for(JComboBox c : comboBoxes)
         {
-            c.setModel(new DefaultComboBoxModel(new String[] {
-                "Cannon", 
-                "Dog", 
-                "BattleShip", 
-                "Car", 
-                "Iron", 
-                "Top Hat", 
-                "Thimble", 
-                "Wheelbarrow", 
-                "Shoe", 
-                "Money Bag"}));
+            ArrayList<String> pieces = new ArrayList<>();
+
+            for(Piece p : Piece.values())
+            {
+                pieces.add(p.getName());
+            }
+            
+            c.setModel(new DefaultComboBoxModel(pieces.toArray()));
             
         }
         
@@ -309,7 +326,7 @@ public class InitGameDialog extends javax.swing.JDialog
         taxCheckBox = new javax.swing.JCheckBox();
         jailCheckBox = new javax.swing.JCheckBox();
         okButton = new javax.swing.JButton();
-        nahButton = new javax.swing.JButton();
+        maybeLaterButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         P10 = new javax.swing.JPanel();
         nameField10 = new javax.swing.JTextField();
@@ -751,12 +768,12 @@ public class InitGameDialog extends javax.swing.JDialog
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        okButton.setText("Lets do this!!!");
+        okButton.setText("Let's Go!");
 
-        nahButton.setText("H'nah");
-        nahButton.addActionListener(new java.awt.event.ActionListener() {
+        maybeLaterButton.setText("Maybe Later");
+        maybeLaterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nahButtonActionPerformed(evt);
+                maybeLaterButtonActionPerformed(evt);
             }
         });
 
@@ -932,7 +949,7 @@ public class InitGameDialog extends javax.swing.JDialog
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(nahButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(maybeLaterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -950,7 +967,7 @@ public class InitGameDialog extends javax.swing.JDialog
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nahButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(maybeLaterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(nameAreasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -958,10 +975,10 @@ public class InitGameDialog extends javax.swing.JDialog
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nahButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nahButtonActionPerformed
-        JOptionPane.showMessageDialog(null, "H'okay then, bye!");
+    private void maybeLaterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maybeLaterButtonActionPerformed
+        JOptionPane.showMessageDialog(null, "Okay then, bye!");
         System.exit(0);
-    }//GEN-LAST:event_nahButtonActionPerformed
+    }//GEN-LAST:event_maybeLaterButtonActionPerformed
 
     private void passGoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passGoTextFieldActionPerformed
         // TODO add your handling code here:
@@ -1067,7 +1084,7 @@ public class InitGameDialog extends javax.swing.JDialog
     private javax.swing.JButton lockIn7;
     private javax.swing.JButton lockIn8;
     private javax.swing.JButton lockIn9;
-    private javax.swing.JButton nahButton;
+    private javax.swing.JButton maybeLaterButton;
     private javax.swing.JPanel nameAreasPanel;
     private javax.swing.JTextField nameField1;
     private javax.swing.JTextField nameField10;
