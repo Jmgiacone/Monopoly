@@ -34,7 +34,17 @@ public enum Piece
     Piece()
     {
         position = 0;
-        name = super.toString().substring(0, 1) + super.toString().replace('_', ' ').substring(1).toLowerCase();
+        name = "";
+        String[] words = super.toString().toLowerCase().split("_");
+        for(int i = 0; i < words.length; i++)
+        {
+            name += words[i].substring(0,1).toUpperCase() + words[i].substring(1);
+
+            if(i != words.length - 1)
+            {
+                name += " ";
+            }
+        }
         setUpImage("images/pieces/" + name + ".png");
     }
     
